@@ -1,9 +1,14 @@
 # Touch Portal .Net SDK
-[![Nuget](https://img.shields.io/nuget/v/TouchPortalSDK)](https://www.nuget.org/packages/TouchPortalSDK) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/TouchPortalSDK)](https://www.nuget.org/packages/TouchPortalSDK)
+[![.NET](https://github.com/mpaperno/TouchPortalSDK/actions/workflows/dotnet.yml/badge.svg)](https://github.com/mpaperno/TouchPortalSDK/actions/workflows/dotnet.yml) 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Touch Portal SDK for making plugins in .Net
+Please note you're on the main branch for this fork (version). This README is specific to this version and repository. The `master` branch will stay synced with the original.
 
-Build from documentation at [Touch Portal Plugin API](https://www.touch-portal.com/api/).
+----------------------
+
+## Touch Portal API for making plugins in .Net
+
+Built based on documentation at [Touch Portal Plugin API](https://www.touch-portal.com/api/).
 
 ### Getting started:
 
