@@ -6,6 +6,7 @@ using TouchPortalSDK.Clients;
 using TouchPortalSDK.Interfaces;
 using TouchPortalSDK.Messages.Events;
 using TouchPortalSDK.Tests.Fixtures;
+using Encoding = System.Text.Encoding;
 
 namespace TouchPortalSDK.Tests.Events
 {
@@ -16,7 +17,7 @@ namespace TouchPortalSDK.Tests.Events
         public void InfoEvent(IFixture fixture, [Frozen]Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"info\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"info\"}"));
 
             eventHandler.Verify(mock => mock.OnInfoEvent(It.IsAny<InfoEvent>()), Times.Once);
         }
@@ -26,7 +27,7 @@ namespace TouchPortalSDK.Tests.Events
         public void CloseEvent(IFixture fixture, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"closePlugin\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"closePlugin\"}"));
 
             eventHandler.Verify(mock => mock.OnClosedEvent("TouchPortal sent a Plugin close event."), Times.Once);
         }
@@ -36,7 +37,7 @@ namespace TouchPortalSDK.Tests.Events
         public void ListChangeEvent(IFixture fixture, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"listChange\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"listChange\"}"));
 
             eventHandler.Verify(mock => mock.OnListChangedEvent(It.IsAny<ListChangeEvent>()), Times.Once);
         }
@@ -46,7 +47,7 @@ namespace TouchPortalSDK.Tests.Events
         public void BroadcastEvent(IFixture fixture, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"broadcast\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"broadcast\"}"));
 
             eventHandler.Verify(mock => mock.OnBroadcastEvent(It.IsAny<BroadcastEvent>()), Times.Once);
         }
@@ -56,7 +57,7 @@ namespace TouchPortalSDK.Tests.Events
         public void SettingsEvent(IFixture fixture, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"settings\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"settings\"}"));
 
             eventHandler.Verify(mock => mock.OnSettingsEvent(It.IsAny<SettingsEvent>()), Times.Once);
         }
@@ -66,7 +67,7 @@ namespace TouchPortalSDK.Tests.Events
         public void ActionEvent_Action(IFixture fixture, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"action\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"action\"}"));
 
             eventHandler.Verify(mock => mock.OnActionEvent(It.IsAny<ActionEvent>()), Times.Once);
         }
@@ -76,7 +77,7 @@ namespace TouchPortalSDK.Tests.Events
         public void ActionEvent_Up(IFixture fixture, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"up\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"up\"}"));
 
             eventHandler.Verify(mock => mock.OnActionEvent(It.IsAny<ActionEvent>()), Times.Once);
         }
@@ -86,7 +87,7 @@ namespace TouchPortalSDK.Tests.Events
         public void ActionEvent_Down(IFixture fixture, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"down\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"down\"}"));
 
             eventHandler.Verify(mock => mock.OnActionEvent(It.IsAny<ActionEvent>()), Times.Once);
         }
@@ -96,7 +97,7 @@ namespace TouchPortalSDK.Tests.Events
         public void UnhandledEvent(IFixture fixture, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.OnMessage("{\"type\":\"unknown\"}");
+            messageHandler.OnMessage(Encoding.UTF8.GetBytes("{\"type\":\"unknown\"}"));
 
             eventHandler.Verify(mock => mock.OnUnhandledEvent(It.IsAny<string>()), Times.Once);
         }

@@ -101,7 +101,7 @@ namespace TouchPortalSDK.Tests.Client
         public void MessageHandler_Close(IFixture fixture, [Frozen] Mock<ITouchPortalSocket> socket, [Frozen] Mock<ITouchPortalEventHandler> eventHandler)
         {
             IMessageHandler messageHandler = fixture.Create<TouchPortalClient>();
-            messageHandler.Close("unitTest", new Exception());
+            messageHandler.OnError("unitTest", new Exception());
             socket.Verify(mock => mock.CloseSocket(), Times.Once);
             eventHandler.Verify(mock => mock.OnClosedEvent("unitTest"), Times.Once);
         }
