@@ -5,16 +5,16 @@ namespace TouchPortalSDK.Interfaces
     public interface IMessageHandler
     {
         /// <summary>
-        /// Method for handling raw messages events, normally in json format.
+        /// Method for handling raw messages events, in UTF8 encoded json byte array.
         /// </summary>
         /// <param name="message"></param>
-        void OnMessage(string message);
+        void OnMessage(byte[] message);
 
         /// <summary>
-        /// Method for forcefully closing the message handler.
+        /// Method for notifying the message handler of hard errors (handler should probably disconnect after this).
         /// </summary>
         /// <param name="message"></param>
         /// <param name="exception"></param>
-        void Close(string message, Exception exception);
+        void OnError(string message, Exception exception);
     }
 }
