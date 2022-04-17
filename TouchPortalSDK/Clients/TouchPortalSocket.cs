@@ -54,7 +54,7 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ITouchPortalSocket" />
-        bool ITouchPortalSocket.Connect()
+        public bool Connect()
         {
             try
             {
@@ -93,7 +93,7 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ITouchPortalSocket" />
-        bool ITouchPortalSocket.Listen()
+        public bool Listen()
         {
             //Create listener thread:
             _logger?.LogInformation("Starting Listener thread...");
@@ -103,15 +103,15 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ITouchPortalSocket" />
-        bool ITouchPortalSocket.SendMessage(string jsonMessage)
+        public bool SendMessage(string jsonMessage)
         {
             if (!string.IsNullOrWhiteSpace(jsonMessage))
-                return ((ITouchPortalSocket)this).SendMessageBytes(_encoding.GetBytes(jsonMessage));
+                return SendMessage(_encoding.GetBytes(jsonMessage));
             return false;
         }
 
         /// <inheritdoc cref="ITouchPortalSocket" />
-        bool ITouchPortalSocket.SendMessageBytes(ReadOnlySpan<byte> messageBytes)
+        public bool SendMessage(ReadOnlySpan<byte> messageBytes)
         {
             if (!_socket.Connected) {
                 _logger?.LogWarning("Socket not connected to Touch Portal.");
@@ -136,7 +136,7 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ITouchPortalSocket" />
-        void ITouchPortalSocket.CloseSocket()
+        public void CloseSocket()
         {
             _cts.Cancel();
             // Note we must check _socket.Connected here in case we are exiting due to a socket error,

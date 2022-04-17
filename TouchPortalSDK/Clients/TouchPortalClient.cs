@@ -237,7 +237,7 @@ namespace TouchPortalSDK.Clients
         {
             var jsonMessage = JsonSerializer.SerializeToUtf8Bytes(command, Options.JsonSerializerOptions);
 
-            var success = _touchPortalSocket.SendMessageBytes(jsonMessage);
+            var success = _touchPortalSocket.SendMessage(jsonMessage);
 
             _logger?.LogDebug($"[{callerMemberName}] sent: '{success}'.");
 

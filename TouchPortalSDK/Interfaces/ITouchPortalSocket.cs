@@ -40,7 +40,7 @@
         /// </summary>
         /// <param name="messageBytes">UTF8 bytes of the fully formatted JSON to send.</param>
         /// <returns>success flag</returns>
-        bool SendMessageBytes(System.ReadOnlySpan<byte> messageBytes);
+        bool SendMessage(System.ReadOnlySpan<byte> messageBytes);
 
         /// <summary>
         /// Closes the socket.
