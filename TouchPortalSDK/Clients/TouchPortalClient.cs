@@ -65,15 +65,15 @@ namespace TouchPortalSDK.Clients
             //Listen:
             // set up message processing queue and task
             _incommingMessages.Clear();
-            _logger?.LogInformation("Starting message processing queue task.");
+            _logger?.LogDebug("Starting message processing queue task.");
             _incomingMessageTask = Task.Run(MessageHandlerTask);
             _incomingMessageTask.ConfigureAwait(false);
             // start socket reader thread
-            _logger?.LogInformation("Start Socket listener.");
+            _logger?.LogDebug("Start Socket listener.");
             var listening = _touchPortalSocket.Listen();
             if (!listening)
                 return false;
-            _logger?.LogInformation("Listener created.");
+            _logger?.LogDebug("Listener created.");
 
             //Pair:
             _logger?.LogInformation("Sending pair message.");
@@ -99,9 +99,9 @@ namespace TouchPortalSDK.Clients
         {
             _logger?.LogInformation(exception, $"Closing TouchPortal Plugin: '{message}'");
 
-            _touchPortalSocket?.CloseSocket();
-
             _eventHandler.OnClosedEvent(message);
+
+            _touchPortalSocket?.CloseSocket();
 
             _cts.Cancel();
             if (_incomingMessageTask.Status == TaskStatus.Running && !_incomingMessageTask.Wait(2000))
@@ -117,119 +117,109 @@ namespace TouchPortalSDK.Clients
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.SettingUpdate(string name, string value)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            try {
+                return SendCommand(new SettingUpdateCommand(name, value));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "SettingUpdateCommand() validation failed.");
                 return false;
-
-            var command = new SettingUpdateCommand(name, value);
-
-            return SendCommand(command);
+            }
         }
 
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.CreateState(string stateId, string desc, string defaultValue)
         {
-            if (string.IsNullOrWhiteSpace(stateId) ||
-                string.IsNullOrWhiteSpace(desc))
+            try {
+                return SendCommand(new CreateStateCommand(stateId, desc, defaultValue));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "CreateStateCommand() validation failed.");
                 return false;
-
-            var command = new CreateStateCommand(stateId, desc, defaultValue);
-
-            return SendCommand(command);
+            }
         }
 
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.RemoveState(string stateId)
         {
-            if (string.IsNullOrWhiteSpace(stateId))
+            try {
+                return SendCommand(new RemoveStateCommand(stateId));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "RemoveStateCommand() validation failed.");
                 return false;
-
-            var command = new RemoveStateCommand(stateId);
-
-            return SendCommand(command);
+            }
         }
 
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.StateUpdate(string stateId, string value)
         {
-            if (string.IsNullOrWhiteSpace(stateId))
+            try {
+                return SendCommand(new StateUpdateCommand(stateId, value));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "StateUpdateCommand() validation failed.");
                 return false;
-
-            var command = new StateUpdateCommand(stateId, value);
-
-            return SendCommand(command);
+            }
         }
 
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.ChoiceUpdate(string choiceId, string[] values, string instanceId)
         {
-            if (string.IsNullOrWhiteSpace(choiceId))
+            try {
+                return SendCommand(new ChoiceUpdateCommand(choiceId, values, instanceId));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "ChoiceUpdateCommand() validation failed.");
                 return false;
-
-            var command = new ChoiceUpdateCommand(choiceId, values, instanceId);
-
-            return SendCommand(command);
+            }
         }
 
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.UpdateActionData(string dataId, double minValue, double maxValue, ActionDataType dataType, string instanceId)
         {
-            if (string.IsNullOrWhiteSpace(dataId))
+            try {
+                return SendCommand(new UpdateActionDataCommand(dataId, minValue, maxValue, dataType, instanceId));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "UpdateActionDataCommand() validation failed.");
                 return false;
-
-            var command = new UpdateActionDataCommand(dataId, minValue, maxValue, dataType, instanceId);
-
-            return SendCommand(command);
+            }
         }
 
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.ShowNotification(string notificationId, string title, string message, NotificationOptions[] notificationOptions)
         {
-            if (string.IsNullOrWhiteSpace(notificationId))
+            try {
+                return SendCommand(new ShowNotificationCommand(notificationId, title, message, notificationOptions));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "ShowNotificationCommand() validation failed.");
                 return false;
-
-            if (string.IsNullOrWhiteSpace(title))
-                return false;
-
-            if (string.IsNullOrWhiteSpace(message))
-                return false;
-
-            if (notificationOptions is null || notificationOptions.Length == 0)
-                return false;
-
-            var command = new ShowNotificationCommand(notificationId, title, message, notificationOptions);
-
-            return SendCommand(command);
+            }
         }
 
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.ConnectorUpdate(string connectorId, int value)
         {
-            if (string.IsNullOrWhiteSpace(connectorId))
+            try {
+                return SendCommand(new ConnectorUpdateCommand(_eventHandler.PluginId, connectorId, value));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "ConnectorUpdateCommand() validation failed.");
                 return false;
-
-            if (value < 0 || value > 100)
-                return false;
-
-            var command = new ConnectorUpdateCommand(_eventHandler.PluginId, connectorId, value);
-
-            if (command.ConnectorId.Length > 200)
-                return false;
-
-            return SendCommand(command);
+            }
         }
 
         /// <inheritdoc cref="ICommandHandler" />
         bool ICommandHandler.ConnectorUpdateShort(string shortId, int value)
         {
-            if (string.IsNullOrWhiteSpace(shortId))
+            try {
+                return SendCommand(new ConnectorUpdateShortCommand(_eventHandler.PluginId, shortId, value));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "ConnectorUpdateShortCommand() validation failed.");
                 return false;
-
-            if (value < 0 || value > 100)
-                return false;
-
-            var command = new ConnectorUpdateShortCommand(_eventHandler.PluginId, shortId, value);
-
-            return SendCommand(command);
+            }
         }
 
         public bool SendCommand<TCommand>(TCommand command, [CallerMemberName]string callerMemberName = "")
