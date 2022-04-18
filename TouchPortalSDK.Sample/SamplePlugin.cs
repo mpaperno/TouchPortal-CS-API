@@ -169,7 +169,7 @@ namespace TouchPortalSDK.Sample
 
                 default:
                     var dataArray = message.Data
-                        .Select(dataItem => $"\"{dataItem.Id}\":\"{dataItem.Value}\"")
+                        .Select(dataItem => $"\"{dataItem.Key}\":\"{dataItem.Value}\"")
                         .ToArray();
 
                     var dataString = string.Join(", ", dataArray);
@@ -218,7 +218,7 @@ namespace TouchPortalSDK.Sample
         public void OnConnecterChangeEvent(ConnectorChangeEvent message)
         {
             var dataArray = message.Data
-                .Select(dataItem => $"\"{dataItem.Id}\":\"{dataItem.Value}\"")
+                .Select(dataItem => $"\"{dataItem.Key}\":\"{dataItem.Value}\"")
                 .ToArray();
 
             var dataString = string.Join(", ", dataArray);
