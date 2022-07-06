@@ -14,7 +14,9 @@ namespace TouchPortalSDK.Messages.Commands
 
         public string DefaultValue { get; set; }
 
-        public CreateStateCommand(string stateId, string desc, string defaultValue)
+        public string ParentGroup { get; set; }
+
+        public CreateStateCommand(string stateId, string desc, string defaultValue = "", string parentGroup = "")
         {
             if (string.IsNullOrWhiteSpace(stateId))
                 throw new ArgumentNullException(nameof(stateId));
@@ -25,6 +27,7 @@ namespace TouchPortalSDK.Messages.Commands
             Id = stateId;
             Desc = desc;
             DefaultValue = defaultValue ?? string.Empty;
+            ParentGroup = parentGroup ?? string.Empty;
         }
 
         /// <inheritdoc cref="ITouchPortalMessage" />
