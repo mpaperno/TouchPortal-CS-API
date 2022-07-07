@@ -19,9 +19,10 @@ namespace TouchPortalSDK.Interfaces
         /// </summary>
         /// <param name="stateId"></param>
         /// <param name="desc">Description of the created state (name in menus).</param>
-        /// <param name="defaultValue"></param>
+        /// <param name="defaultValue">Default value of this state, default is empty string.</param>
+        /// <param name="parentGroup">Parent group of this state (TP API v6). Default is an empty string.</param>
         /// <returns></returns>
-        bool CreateState(string stateId, string desc, string defaultValue = "");
+        bool CreateState(string stateId, string desc, string defaultValue = "", string parentGroup = "");
 
         /// <summary>
         /// Updates a setting in Touch Portal.

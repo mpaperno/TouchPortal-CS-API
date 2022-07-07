@@ -144,10 +144,10 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ICommandHandler" />
-        bool ICommandHandler.CreateState(string stateId, string desc, string defaultValue)
+        bool ICommandHandler.CreateState(string stateId, string desc, string defaultValue, string parentGroup)
         {
             try {
-                return SendCommand(new CreateStateCommand(stateId, desc, defaultValue));
+                return SendCommand(new CreateStateCommand(stateId, desc, defaultValue, parentGroup));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "CreateStateCommand() validation failed.");
