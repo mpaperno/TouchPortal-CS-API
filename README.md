@@ -1,5 +1,5 @@
 # Touch Portal C# API
-
+[![Nuget](https://img.shields.io/nuget/v/TouchPortal-CS-API)](https://www.nuget.org/packages/TouchPortal-CS-API)
 [![.NET](https://github.com/mpaperno/TouchPortal-CS-API/actions/workflows/dotnet.yml/badge.svg)](https://github.com/mpaperno/TouchPortal-CS-API/actions/workflows/dotnet.yml) 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -51,6 +51,11 @@ Since `oddbear's` TouchPortalSDK v 0.30.0 release version, the paths have diverg
 
 ### New Features
 
+#### v 1.44.0
+* Add TP API v6 `parentGroup` parameter for dynamic state creation.
+* Add static `TouchPortalOptions.ValidateCommandParameters` setting to bypass all parameter validation when creating new Command types.
+
+#### v0.43.0-mp
 * Add `ConnectorChangeEvent.Data` property to get Connector data members (structure is identical to Actions). 
   `ConnectorChangeEvent` and `ActionEvent` now have a common base class `DataContainerEventBase`.
   [commit](https://github.com/mpaperno/TouchPortal-CS-API/commit/ca778ccfdde2ee624198b70abffa356839ead350)
@@ -67,7 +72,7 @@ Since `oddbear's` TouchPortalSDK v 0.30.0 release version, the paths have diverg
   (eg. for IDs like `<plugin>.<category>.<action>.<data1>` one could split on the period and have much shorter/simpler key lookups).
   [commit](https://github.com/mpaperno/TouchPortal-CS-API/commit/89a81c42a68f75d6d4ea35b2d31ae83aaa8568f1)
 
-Some other changes:
+#### Some other changes:
 * Does not crash on shutdown. Your plugin code can clean up and shut down properly.
 * Benchmarked at around 30-50% better performance/throughput in several areas like JSON de-serialization and actual socket efficiency (removes 2 layers of buffers and reads/writes UTF8 JSON bytes directly).
 * Log verbosity at the Info level greatly reduced. Logging in general improved and made more consistent, especially at Debug level.

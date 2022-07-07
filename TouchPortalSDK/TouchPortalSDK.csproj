@@ -14,12 +14,27 @@
     <StartupObject />
     <RepositoryType>git</RepositoryType>
     <Company />
+    <AssemblyName>TouchPortalSDK</AssemblyName>
+    <RootNamespace>TouchPortalSDK</RootNamespace>
+    <PackageId>TouchPortal-CS-API</PackageId>
+    <Product>TouchPortal-CS-API</Product>
+    <Copyright>Copyright Maxim Paperno; all rights reserved</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>touch-portal;touchportal;touch-portal-api</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
