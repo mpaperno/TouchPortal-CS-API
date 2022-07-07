@@ -16,9 +16,9 @@ namespace TouchPortalSDK.Messages.Commands
 
         public ChoiceUpdateCommand(string listId, string[] value, string instanceId = null)
         {
-            if (string.IsNullOrWhiteSpace(listId))
+            if (TouchPortalOptions.ValidateCommandParameters && string.IsNullOrWhiteSpace(listId))
                 throw new ArgumentNullException(nameof(listId));
-            
+
             Id = listId;
             Value = value ?? Array.Empty<string>();
 

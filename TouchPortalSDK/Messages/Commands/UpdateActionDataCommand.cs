@@ -15,9 +15,9 @@ namespace TouchPortalSDK.Messages.Commands
 
         public UpdateActionDataCommand(string dataId, double minValue, double maxValue, ActionDataType dataType, string instanceId = null)
         {
-            if (string.IsNullOrWhiteSpace(dataId))
+            if (TouchPortalOptions.ValidateCommandParameters && string.IsNullOrWhiteSpace(dataId))
                 throw new ArgumentNullException(nameof(dataId));
-            
+
             Data = new DataValue(dataId, minValue, maxValue, dataType);
 
             if (!string.IsNullOrWhiteSpace(instanceId))

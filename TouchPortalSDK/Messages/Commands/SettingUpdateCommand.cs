@@ -14,7 +14,7 @@ namespace TouchPortalSDK.Messages.Commands
 
         public SettingUpdateCommand(string name, string value)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (TouchPortalOptions.ValidateCommandParameters && string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException(nameof(name));
 
             Name = name;

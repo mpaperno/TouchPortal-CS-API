@@ -18,12 +18,13 @@ namespace TouchPortalSDK.Messages.Commands
 
         public CreateStateCommand(string stateId, string desc, string defaultValue = "", string parentGroup = "")
         {
-            if (string.IsNullOrWhiteSpace(stateId))
-                throw new ArgumentNullException(nameof(stateId));
+            if (TouchPortalOptions.ValidateCommandParameters) {
+                if (string.IsNullOrWhiteSpace(stateId))
+                    throw new ArgumentNullException(nameof(stateId));
 
-            if (string.IsNullOrWhiteSpace(desc))
-                throw new ArgumentNullException(nameof(desc));
-
+                if (string.IsNullOrWhiteSpace(desc))
+                    throw new ArgumentNullException(nameof(desc));
+            }
             Id = stateId;
             Desc = desc;
             DefaultValue = defaultValue ?? string.Empty;

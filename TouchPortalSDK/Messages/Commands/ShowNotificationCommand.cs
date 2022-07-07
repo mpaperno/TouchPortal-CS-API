@@ -19,18 +19,19 @@ namespace TouchPortalSDK.Messages.Commands
 
         public ShowNotificationCommand(string notificationId, string title, string message, NotificationOptions[] notificationOptions)
         {
-            if (string.IsNullOrWhiteSpace(notificationId))
-                throw new ArgumentNullException(nameof(notificationId));
+            if (TouchPortalOptions.ValidateCommandParameters) {
+                if (string.IsNullOrWhiteSpace(notificationId))
+                    throw new ArgumentNullException(nameof(notificationId));
 
-            if (string.IsNullOrWhiteSpace(title))
-                throw new ArgumentNullException(nameof(title));
+                if (string.IsNullOrWhiteSpace(title))
+                    throw new ArgumentNullException(nameof(title));
 
-            if (string.IsNullOrWhiteSpace(message))
-                throw new ArgumentNullException(nameof(message));
+                if (string.IsNullOrWhiteSpace(message))
+                    throw new ArgumentNullException(nameof(message));
 
-            if(!notificationOptions.Any())
-              throw new Exception("At least one option is required.");
-
+                if(!notificationOptions.Any())
+                  throw new Exception("At least one option is required.");
+            }
             NotificationId = notificationId;
             Title = title;
             Msg = message;

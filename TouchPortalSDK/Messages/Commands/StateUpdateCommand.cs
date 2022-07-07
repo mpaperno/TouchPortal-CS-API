@@ -14,7 +14,7 @@ namespace TouchPortalSDK.Messages.Commands
 
         public StateUpdateCommand(string stateId, string value)
         {
-            if (string.IsNullOrWhiteSpace(stateId))
+            if (TouchPortalOptions.ValidateCommandParameters && string.IsNullOrWhiteSpace(stateId))
                 throw new ArgumentNullException(nameof(stateId));
 
             Id = stateId;

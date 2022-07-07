@@ -12,7 +12,7 @@ namespace TouchPortalSDK.Messages.Commands
 
         public RemoveStateCommand(string stateId)
         {
-            if (string.IsNullOrWhiteSpace(stateId))
+            if (TouchPortalOptions.ValidateCommandParameters && string.IsNullOrWhiteSpace(stateId))
                 throw new ArgumentNullException(nameof(stateId));
 
             Id = stateId;
