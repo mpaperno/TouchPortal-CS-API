@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.43.0-mp</Version>
+    <Version>1.44.0</Version>
     <Authors>Oddbjørn U. Bakke, Maxim Paperno</Authors>
     <PackageProjectUrl>https://github.com/mpaperno/TouchPortalSDK</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mpaperno/TouchPortalSDK</RepositoryUrl>
