@@ -1,4 +1,4 @@
-# Touch Portal C# API
+# Touch Portal C# and .NET API
 [![Nuget](https://img.shields.io/nuget/v/TouchPortal-CS-API)](https://www.nuget.org/packages/TouchPortal-CS-API)
 [![.NET](https://github.com/mpaperno/TouchPortal-CS-API/actions/workflows/dotnet.yml/badge.svg)](https://github.com/mpaperno/TouchPortal-CS-API/actions/workflows/dotnet.yml) 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -8,7 +8,7 @@ See further details below.
 
 ----------------------
 
-## Touch Portal API for making plugins with C#
+## Touch Portal API for making plugins with .NET
 
 Built based on documentation at [Touch Portal Plugin API](https://www.touch-portal.com/api/).
 
