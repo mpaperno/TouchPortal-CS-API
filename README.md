@@ -49,7 +49,12 @@ for how to update (but now you can also `message.Data.TryGetValue("myDataId", ou
 
 Since `oddbear's` TouchPortalSDK v 0.30.0 release version, the paths have diverged further, most notably in the handling of TP Connectors.
 
-### New Features
+### New Features & Change Log
+
+#### v 1.45.0
+Both changes affect the feature which parses the "Long" connector ID from the short ID notification events into individual key/value fields (see notes for v0.43.0-mp below).
+* Connector data key names are now truncated if `TouchPortalOptions.ActionDataIdSeparator` is set, just like action/connector data keys.
+* Fix that the "pc_plugin-name_" part wasn't properly stripped from the "actual" connector ID.
 
 #### v 1.44.0
 * Add TP API v6 `parentGroup` parameter for dynamic state creation.
