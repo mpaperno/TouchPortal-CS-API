@@ -5,7 +5,7 @@
         /// <summary>
         /// The connection state of the Socket being used internally.
         /// </summary>
-        public bool IsConnected { get; }
+        bool IsConnected { get; }
 
         /// <summary>
         /// Size of the receive buffer in bytes, for possible tuning.
@@ -14,7 +14,7 @@
         /// This must be set <b>before</b> <see cref="Listen()"/> is called.
         /// Default is 2048.
         /// </summary>
-        public int ReceiveBufferSize { get; set; }
+        int ReceiveBufferSize { get; set; }
 
         /// <summary>
         /// Connects to Touch Portal.
@@ -33,14 +33,14 @@
         /// </summary>
         /// <param name="jsonMessage">The fully formatted JSON to send.</param>
         /// <returns>success flag</returns>
-        bool SendMessage(string jsonMessage);
+        bool SendMessage(in string jsonMessage);
 
         /// <summary>
         /// Sends a JSON message which is already encoded to a UTF8 byte array.
         /// </summary>
         /// <param name="messageBytes">UTF8 bytes of the fully formatted JSON to send.</param>
         /// <returns>success flag</returns>
-        bool SendMessage(System.ReadOnlySpan<byte> messageBytes);
+        bool SendMessage(in byte[] messageBytes);
 
         /// <summary>
         /// Closes the socket.

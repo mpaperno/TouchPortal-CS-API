@@ -103,7 +103,7 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ITouchPortalSocket" />
-        public bool SendMessage(string jsonMessage)
+        public bool SendMessage(in string jsonMessage)
         {
             if (!string.IsNullOrWhiteSpace(jsonMessage))
                 return SendMessage(_encoding.GetBytes(jsonMessage));
@@ -111,7 +111,7 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ITouchPortalSocket" />
-        public bool SendMessage(ReadOnlySpan<byte> messageBytes)
+        public bool SendMessage(in byte[] messageBytes)
         {
             if (!_socket.Connected) {
                 _logger?.LogWarning("Socket not connected to Touch Portal.");
@@ -154,26 +154,29 @@ namespace TouchPortalSDK.Clients
             _socket?.Close();
         }
 
-        private void WriteLine(ReadOnlySpan<byte> msgbytes)
+        static readonly byte[] bNewline = new byte[1] { 10 };
+
+        private void WriteLine(in byte[] msgbytes)
         {
             if (msgbytes == null)
                 return;
 
-            int len = msgbytes.Length;
-            byte[] bytes = new byte[len + 1];
-            var target = new Span<byte>(bytes);
-            msgbytes.CopyTo(target);
-            bytes[len++] = 10;
-            int unsent = len;
-            int sent = 0;
-            int startAt = 0;
+            int len = msgbytes.Length,
+              unsent = len,
+              sent = 0,
+              startAt = 0;
+
             _logger?.LogDebug($"WriteLine() Starting message send with {len} bytes.");
             do {
                 try {
-                    sent += _socket.Send(bytes, startAt, unsent, SocketFlags.None);
+                    sent += _socket.Send(msgbytes, startAt, unsent, SocketFlags.None);
                     if (sent < len) {
                         unsent -= sent;
                         startAt = sent - 1;
+                    }
+                    else {
+                      // send terminating newline
+                      _socket.Send(bNewline, 0, 1, SocketFlags.None);
                     }
                 }
                 catch (SocketException e)
