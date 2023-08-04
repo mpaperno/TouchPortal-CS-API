@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.45.0</Version>
-    <FileVersion>1.45.0.0</FileVersion>
     <TargetFrameworks>net5.0;net6.0;net7.0</TargetFrameworks>
+    <Version>1.46.0</Version>
+    <FileVersion>1.46.0.0</FileVersion>
     <Authors>Maxim Paperno, Oddbjørn U. Bakke</Authors>
     <PackageProjectUrl>https://github.com/mpaperno/TouchPortal-CS-API</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mpaperno/TouchPortal-CS-API.git</RepositoryUrl>
@@ -37,6 +37,7 @@
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
