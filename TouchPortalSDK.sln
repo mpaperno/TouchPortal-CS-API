@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31025.194
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchPortalSDK", "TouchPortalSDK\TouchPortalSDK.csproj", "{5370B2EB-A29F-4642-BEF4-56BC5F2244C2}"
 EndProject
@@ -28,11 +28,9 @@ Global
 		{9190D83F-62B9-42E9-80C8-0A5B676A6781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9190D83F-62B9-42E9-80C8-0A5B676A6781}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9190D83F-62B9-42E9-80C8-0A5B676A6781}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9190D83F-62B9-42E9-80C8-0A5B676A6781}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F93B6E17-512C-4FDA-8FC3-742B9A7F495D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F93B6E17-512C-4FDA-8FC3-742B9A7F495D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F93B6E17-512C-4FDA-8FC3-742B9A7F495D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F93B6E17-512C-4FDA-8FC3-742B9A7F495D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
