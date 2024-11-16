@@ -53,6 +53,10 @@ Since `oddbear's` TouchPortalSDK v 0.30.0 release version, the paths have diverg
 
 ### New Features & Change Log
 
+#### v 1.46.1
+* Updated for .NET8 and dropped .NET5 support.
+* Updated dependencies to 8.x versions (also fixes a security issue in the `System.Text.Json` library).
+
 #### v 1.46.0
 * Optimized TP message output by skipping a byte array copy step for appending the terminating newline after each JSON struct.
 * Published .NET6 and .NET7 builds.
