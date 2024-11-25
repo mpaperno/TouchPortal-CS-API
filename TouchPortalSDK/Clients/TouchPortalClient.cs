@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -144,10 +144,10 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ICommandHandler" />
-        bool ICommandHandler.CreateState(string stateId, string desc, string defaultValue, string parentGroup)
+        bool ICommandHandler.CreateState(string stateId, string desc, string defaultValue, string parentGroup, bool forceUpdate)
         {
             try {
-                return SendCommand(new CreateStateCommand(stateId, desc, defaultValue, parentGroup));
+                return SendCommand(new CreateStateCommand(stateId, desc, defaultValue, parentGroup, forceUpdate));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "CreateStateCommand() validation failed.");
@@ -239,6 +239,37 @@ namespace TouchPortalSDK.Clients
             }
         }
 
+        /// <inheritdoc cref="ICommandHandler" />
+        bool ICommandHandler.TriggerEvent(string eventId, TriggerEventStates states)
+        {
+            try {
+                return SendCommand(new TriggerEventCommand(eventId, states));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "TriggerEvent() validation failed.");
+                return false;
+            }
+        }
+
+        /// <inheritdoc cref="ICommandHandler" />
+        bool ICommandHandler.StateListUpdate(string stateId, string[] values)
+        {
+            try {
+                return SendCommand(new StateListUpdateCommand(stateId, values));
+            }
+            catch (ArgumentException e) {
+                _logger?.LogWarning(e, "StateListUpdate() validation failed.");
+                return false;
+            }
+
+        }
+
+        /// <summary>
+        /// Send a Command directly to Touch Portal. All the other command sending methods are conveniences for this one.
+        /// </summary>
+        /// <typeparam name="TCommand">A type implementing from `ITouchPortalMessage`</typeparam>
+        /// <param name="command">One of `TouchPortalSDK.Messages.Commands` types.</param>
+        /// <returns></returns>
         public bool SendCommand<TCommand>(TCommand command, [CallerMemberName]string callerMemberName = "")
             where TCommand : ITouchPortalMessage
         {

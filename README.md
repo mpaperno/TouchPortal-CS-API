@@ -53,6 +53,16 @@ Since `oddbear's` TouchPortalSDK v 0.30.0 release version, the paths have diverg
 
 ### New Features & Change Log
 
+#### v 1.47.0
+Updates for Touch Portal API versions 7-10.
+* Added `TriggerEvent(string eventId, Dictionary<string, object> states)` method & `TriggerEventCommand` type.
+* Added `StateListUpdate(string stateId, string[] values)` method & `StateListUpdateCommand` type.
+* Added `forceUpdate` option to `CreateState()` method and `CreateStateCommand.ForceUpdate` member.
+* Added `ListChangeEvent.Values` property for `listChangeEvent` incoming message. This is a `Dictionary<string, string>` type.
+* Added `InfoEvent.CurrentPagePathMainDevice` and `InfoIevent.CurrentPagePathSecondaryDevices` properties for `info` incoming message type.
+* Added `PreviousPageName`, `DeviceIP`, `DeviceName`, and `DeviceID` to `BroadcastEvent` incoming message type.
+* Added & improved some documentation comments.
+
 #### v 1.46.1
 * Updated for .NET8 and dropped .NET5 support.
 * Updated dependencies to 8.x versions (also fixes a security issue in the `System.Text.Json` library).

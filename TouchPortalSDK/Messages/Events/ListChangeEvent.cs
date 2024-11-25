@@ -1,8 +1,12 @@
-﻿using TouchPortalSDK.Interfaces;
+using TouchPortalSDK.Interfaces;
 using TouchPortalSDK.Messages.Models;
 
 namespace TouchPortalSDK.Messages.Events
 {
+    /// <summary>
+    /// This event is fired when a user selects an item from an action's choice list.
+    /// This is especially useful when your action (or event/connector) has multiple drop down list boxes where selecting an item in the first needs to repopulate the second.
+    /// </summary>
     public class ListChangeEvent : ITouchPortalMessage
     {
         /// <summary>
@@ -37,6 +41,13 @@ namespace TouchPortalSDK.Messages.Events
         /// Might be null if nothing is selected, ex. choices updated to something else.
         /// </summary>
         public string Value { get; set; }
+
+        /// <summary>
+        /// Values is an {id, value} pairs dictionary of other options the user has selected for this action, not including the value of the instance being changed.
+        /// Available since TP API v7. It may be `null` for TP v3.x (TP API &lt; v7)
+        /// </summary>
+        public ActionData Values { get; set; } = null;
+
 
         /// <inheritdoc cref="ITouchPortalMessage" />
         public Identifier GetIdentifier()

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
-    <Version>1.46.1</Version>
-    <FileVersion>1.46.1.0</FileVersion>
+    <Version>1.47.0</Version>
+    <FileVersion>1.47.0.0</FileVersion>
     <Authors>Maxim Paperno, Oddbjørn U. Bakke</Authors>
     <PackageProjectUrl>https://github.com/mpaperno/TouchPortal-CS-API</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mpaperno/TouchPortal-CS-API.git</RepositoryUrl>

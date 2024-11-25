@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using TouchPortalSDK.Interfaces;
@@ -31,10 +31,12 @@ namespace TouchPortalSDK.Configuration
             // RemoveState,
             // StateUpdate,
             // UpdateActionData,
-            // SettingsUpdate
+            // SettingsUpdate,
+            // TriggerEventCommand,
+            // StateListUpdate
         }
 
-        // Map the event name enums to the corresponding types.  (Benchamrked against using an Attribute on the enums and a dict lookup is several magnitudes faster.)
+        // Map the event name enums to the corresponding types.  (Benchmarked against using an Attribute on the enums and a dict lookup is several magnitudes faster.)
         private static readonly ReadOnlyDictionary<TpEventName, System.Type> eventTypeMap = new ReadOnlyDictionary<TpEventName, System.Type>(
             new Dictionary<TpEventName, System.Type>() {
                 { TpEventName.Action,                       typeof(ActionEvent) },
@@ -58,7 +60,7 @@ namespace TouchPortalSDK.Configuration
         /// <summary>
         /// Resolves and parses a JSON string from byte array into a <see cref="ITouchPortalMessage"/> event Type.
         /// </summary>
-        /// <param name="message">byte array of UTF8-encdoed chars.</param>
+        /// <param name="message">byte array of UTF8-encoded chars.</param>
         /// <returns>A resolved <see cref="ITouchPortalMessage"/> type or <c>null</c> if the event type is unknown.</returns>
         /// <exception cref="JsonException">In case of any JSON string parsing errors.</exception>
         internal static ITouchPortalMessage ResolveMessage(System.ReadOnlySpan<byte> message)
