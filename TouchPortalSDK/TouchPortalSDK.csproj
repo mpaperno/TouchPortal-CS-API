@@ -13,6 +13,7 @@
     <Description>Touch Portal API for making plugins with .NET</Description>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
+    <Platforms>AnyCPU;x64</Platforms>
     <StartupObject />
     <Company />
     <AssemblyName>TouchPortalSDK</AssemblyName>
@@ -41,12 +42,16 @@
     <CheckEolTargetFramework>False</CheckEolTargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>portable</DebugType>
     <NoWarn>
       <!-- documentation warnings-->
       1591;1573;1574
     </NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -68,6 +73,5 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
-    <!--<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />-->
   </ItemGroup>
 </Project>
