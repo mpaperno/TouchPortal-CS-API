@@ -102,7 +102,7 @@ namespace TouchPortalSDK.Clients
                 return;
             _closing = true;
 
-            _logger?.LogInformation(exception, $"Closing TouchPortal Plugin: '{message}'");
+            _logger?.LogInformation(exception, "Closing TouchPortal Plugin: '{message}'", message);
 
             _eventHandler.OnClosedEvent(message);
 
@@ -271,7 +271,10 @@ namespace TouchPortalSDK.Clients
 
             var success = _touchPortalSocket.SendMessage(jsonMessage);
 
-            _logger?.LogDebug($"[{callerMemberName}] sent: '{success}'.");
+            _logger?.LogDebug(
+              "[{CallerMemberName}] sent: {success}; message: \n{Message}",
+              callerMemberName, success, System.Text.Encoding.UTF8.GetString(jsonMessage)
+            );
 
             return success;
         }
@@ -347,13 +350,13 @@ namespace TouchPortalSDK.Clients
                         }
                         // Catch any parsing exceptions (unlikely)
                         catch (JsonException e) {
-                            _logger?.LogWarning(e, $"JSON parsing exception, see trace for details. Continuing execution with next message.'");
+                            _logger?.LogWarning(e, "JSON parsing exception, see trace for details. Continuing execution with next message.'");
                             continue;
                         }
                         // Catch any exceptions in the plugin user's callback code itself.
                         // This does assume the plugin author is looking at their logs/console and not relying on us crashing on their exceptions.
                         catch (Exception e) {
-                          _logger?.LogWarning(e, $"Exception in message event handler. Continuing execution with next message.'");
+                          _logger?.LogWarning(e, "Exception in message event handler. Continuing execution with next message.'");
                           continue;
                       }
                   }

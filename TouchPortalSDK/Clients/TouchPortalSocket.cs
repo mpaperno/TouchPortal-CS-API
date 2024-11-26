@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -145,7 +145,7 @@ namespace TouchPortalSDK.Clients
             // Note we must check _socket.Connected here in case we are exiting due to a socket error,
             // in which case this method is likely being called from within that thread (via handler.OnError()). Hence if we try to
             // wait for the thread to exit, that's just not going to work. We rest assured that it will exit once we're done here.
-            // OTOH if we're just disconnecting "nicely" then we do want to make sure the listener thread finished up after we cancelled the token.
+            // OTOH if we're just disconnecting "nicely" then we do want to make sure the listener thread finished up after we canceled the token.
             if (_socket != null && _socket.Connected && _listenerThread.IsAlive && !_listenerThread.Join(_socket.ReceiveTimeout * 3)) {
                 _logger?.LogWarning("Network stream is hung up, interrupting the listener thread.");
                 _listenerThread.Interrupt();
@@ -166,7 +166,7 @@ namespace TouchPortalSDK.Clients
               sent = 0,
               startAt = 0;
 
-            _logger?.LogDebug($"WriteLine() Starting message send with {len} bytes.");
+            _logger?.LogTrace("WriteLine() Starting message send with {Length} bytes.", len);
             do {
                 try {
                     sent += _socket.Send(msgbytes, startAt, unsent, SocketFlags.None);
@@ -190,7 +190,7 @@ namespace TouchPortalSDK.Clients
             }
             while (sent < len && _socket.Connected && !_cancellationToken.IsCancellationRequested);
 
-            _logger?.LogDebug($"WriteLine() Sent {sent} bytes.");
+            _logger?.LogDebug("WriteLine() Sent {Sent} out of {Length} bytes.", sent, len);
         }
 
         private void ListenerThreadSync()
@@ -262,10 +262,10 @@ namespace TouchPortalSDK.Clients
                     //      _socket.Send(empty, 0, 0);
                     //}
 
-                }  // outer "wait for data or cacellation" loop
+                }  // outer "wait for data or cancellation" loop
 
-                // This will happen when using socket.Available and the socket is closed unexpectedly (bbasically equivalent of the catch statements above).
-                // We could probably remove this check if not using Available, but it dosn't hurt anything to leave it in.
+                // This will happen when using socket.Available and the socket is closed unexpectedly (basically equivalent of the catch statements above).
+                // We could probably remove this check if not using Available, but it doesn't hurt anything to leave it in.
                 if (!_socket.Connected && !_cancellationToken.IsCancellationRequested)
                     _messageHandler.OnError("Connection Terminated, Touch Portal quit without a goodbye.", null);
             }
