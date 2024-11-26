@@ -16,9 +16,9 @@ namespace TouchPortalSDK.Messages.Commands
     public string Type => "triggerEvent";
 
     /// <summary> The event id to trigger. This event must be defined in the plugin's entry.tp declaration.</summary>
-    public string EventId;
+    public string EventId { get; set; }
     /// <summary> This gets serialized to a JSON Object that holds key value pairs of data that are used within Touch Portal as Local States. </summary>
-    public TriggerEventStates States = null;
+    public TriggerEventStates States { get; set; } = null;
 
     public TriggerEventCommand(string eventId, TriggerEventStates states = null)
     {
