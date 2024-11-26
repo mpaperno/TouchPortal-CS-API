@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
-    <Version>1.47.0</Version>
-    <FileVersion>1.47.0.0</FileVersion>
+    <Version>1.47.1</Version>
+    <FileVersion>1.47.1.0</FileVersion>
     <Authors>Maxim Paperno, Oddbjørn U. Bakke</Authors>
     <PackageProjectUrl>https://github.com/mpaperno/TouchPortal-CS-API</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mpaperno/TouchPortal-CS-API.git</RepositoryUrl>
@@ -42,6 +42,12 @@
     <CheckEolTargetFramework>False</CheckEolTargetFramework>
   </PropertyGroup>
 
+  <Target Name="InjectPackageReleaseNotesFromFile" BeforeTargets="GenerateNuspec" Condition="Exists('..\CHANGELOG.md')">
+    <PropertyGroup>
+      <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../CHANGELOG.md"))</PackageReleaseNotes>
+    </PropertyGroup>
+  </Target>
+
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>portable</DebugType>
     <NoWarn>
@@ -60,6 +66,11 @@
       <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\CHANGELOG.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -74,4 +85,5 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
+
 </Project>
