@@ -13,6 +13,15 @@ namespace TouchPortalSDK.Interfaces
         bool SendMessage(string message);
 
         /// <summary>
+        /// Send a Command directly to Touch Portal. All the other command sending methods are conveniences for this one.
+        /// </summary>
+        /// <param name="command">One of `TouchPortalSDK.Messages.Commands` types.</param>
+        /// <param name="callerMemberName">Name of the calling method. By default this is determined automatically at compile time.</param>
+        /// <returns>true on successful sending of the message, false otherwise.</returns>
+        bool SendCommand<TCommand>(TCommand  command, [System.Runtime.CompilerServices.CallerMemberName]string callerMemberName = "")
+            where TCommand : ITouchPortalMessage;
+
+        /// <summary>
         /// Creates a dynamic state in Touch Portal Memory.
         /// This state will disappear when restarting Touch Portal.
         /// You will need to persist them yourself and reload them on plugin load.

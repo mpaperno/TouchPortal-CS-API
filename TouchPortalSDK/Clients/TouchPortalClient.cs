@@ -68,7 +68,7 @@ namespace TouchPortalSDK.Clients
             _incommingMessages.Clear();
             _logger?.LogDebug("Starting message processing queue task.");
             _incomingMessageTask = Task.Run(MessageHandlerTask);
-            _incomingMessageTask.ConfigureAwait(false);
+
             // start socket reader thread
             _logger?.LogDebug("Start Socket listener.");
             var listening = _touchPortalSocket.Listen();
@@ -79,7 +79,7 @@ namespace TouchPortalSDK.Clients
             //Pair:
             _logger?.LogInformation("Sending pair message.");
             var pairCommand = new PairCommand(_eventHandler.PluginId);
-            var pairing = SendCommand(pairCommand);
+            var pairing = ((ICommandHandler)this).SendCommand(pairCommand);
             if (!pairing)
                 return false;
 
@@ -135,7 +135,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.SettingUpdate(string name, string value)
         {
             try {
-                return SendCommand(new SettingUpdateCommand(name, value));
+                return ((ICommandHandler)this).SendCommand(new SettingUpdateCommand(name, value));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "SettingUpdateCommand() validation failed.");
@@ -147,7 +147,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.CreateState(string stateId, string desc, string defaultValue, string parentGroup, bool forceUpdate)
         {
             try {
-                return SendCommand(new CreateStateCommand(stateId, desc, defaultValue, parentGroup, forceUpdate));
+                return ((ICommandHandler)this).SendCommand(new CreateStateCommand(stateId, desc, defaultValue, parentGroup, forceUpdate));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "CreateStateCommand() validation failed.");
@@ -159,7 +159,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.RemoveState(string stateId)
         {
             try {
-                return SendCommand(new RemoveStateCommand(stateId));
+                return ((ICommandHandler)this).SendCommand(new RemoveStateCommand(stateId));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "RemoveStateCommand() validation failed.");
@@ -171,7 +171,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.StateUpdate(string stateId, string value)
         {
             try {
-                return SendCommand(new StateUpdateCommand(stateId, value));
+                return ((ICommandHandler)this).SendCommand(new StateUpdateCommand(stateId, value));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "StateUpdateCommand() validation failed.");
@@ -183,7 +183,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.ChoiceUpdate(string choiceId, string[] values, string instanceId)
         {
             try {
-                return SendCommand(new ChoiceUpdateCommand(choiceId, values, instanceId));
+                return ((ICommandHandler)this).SendCommand(new ChoiceUpdateCommand(choiceId, values, instanceId));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "ChoiceUpdateCommand() validation failed.");
@@ -195,7 +195,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.UpdateActionData(string dataId, double minValue, double maxValue, ActionDataType dataType, string instanceId)
         {
             try {
-                return SendCommand(new UpdateActionDataCommand(dataId, minValue, maxValue, dataType, instanceId));
+                return ((ICommandHandler)this).SendCommand(new UpdateActionDataCommand(dataId, minValue, maxValue, dataType, instanceId));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "UpdateActionDataCommand() validation failed.");
@@ -207,7 +207,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.ShowNotification(string notificationId, string title, string message, NotificationOptions[] notificationOptions)
         {
             try {
-                return SendCommand(new ShowNotificationCommand(notificationId, title, message, notificationOptions));
+                return ((ICommandHandler)this).SendCommand(new ShowNotificationCommand(notificationId, title, message, notificationOptions));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "ShowNotificationCommand() validation failed.");
@@ -219,7 +219,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.ConnectorUpdate(string connectorId, int value)
         {
             try {
-                return SendCommand(new ConnectorUpdateCommand(_eventHandler.PluginId, connectorId, value));
+                return ((ICommandHandler)this).SendCommand(new ConnectorUpdateCommand(_eventHandler.PluginId, connectorId, value));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "ConnectorUpdateCommand() validation failed.");
@@ -231,7 +231,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.ConnectorUpdateShort(string shortId, int value)
         {
             try {
-                return SendCommand(new ConnectorUpdateShortCommand(_eventHandler.PluginId, shortId, value));
+                return ((ICommandHandler)this).SendCommand(new ConnectorUpdateShortCommand(_eventHandler.PluginId, shortId, value));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "ConnectorUpdateShortCommand() validation failed.");
@@ -243,7 +243,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.TriggerEvent(string eventId, TriggerEventStates states)
         {
             try {
-                return SendCommand(new TriggerEventCommand(eventId, states));
+                return ((ICommandHandler)this).SendCommand(new TriggerEventCommand(eventId, states));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "TriggerEvent() validation failed.");
@@ -255,7 +255,7 @@ namespace TouchPortalSDK.Clients
         bool ICommandHandler.StateListUpdate(string stateId, string[] values)
         {
             try {
-                return SendCommand(new StateListUpdateCommand(stateId, values));
+                return ((ICommandHandler)this).SendCommand(new StateListUpdateCommand(stateId, values));
             }
             catch (ArgumentException e) {
                 _logger?.LogWarning(e, "StateListUpdate() validation failed.");
@@ -264,14 +264,8 @@ namespace TouchPortalSDK.Clients
 
         }
 
-        /// <summary>
-        /// Send a Command directly to Touch Portal. All the other command sending methods are conveniences for this one.
-        /// </summary>
-        /// <typeparam name="TCommand">A type implementing from `ITouchPortalMessage`</typeparam>
-        /// <param name="command">One of `TouchPortalSDK.Messages.Commands` types.</param>
-        /// <returns></returns>
-        public bool SendCommand<TCommand>(TCommand command, [CallerMemberName]string callerMemberName = "")
-            where TCommand : ITouchPortalMessage
+        /// <inheritdoc cref="ICommandHandler" />
+        bool ICommandHandler.SendCommand<TCommand>(TCommand command, string callerMemberName)
         {
             var jsonMessage = JsonSerializer.SerializeToUtf8Bytes(command, Options.JsonSerializerOptions);
 
