@@ -1,5 +1,13 @@
 # Touch Portal .NET API - Change Log
 
+## v1.47.2 (19-May-24)
+* Deprecated usage of `TriggerEventStates` custom type in `TouchPortalClient::TriggerEvent()` and `TriggerEventCommand`:  ([1049c940])
+  * Switch `TriggerEventCommand` to use regular `Dictionary<string,string>` type; 
+  * Updated `TouchPortalClient::TriggerEvent()` method to accept `Dictionary<string,string>`  type for local states argument and added overload which accepts a more generic `IReadOnlyDictionary<string,string>` argument.
+
+[1049c940]: https://github.com/mpaperno/TouchPortal-CS-API/commit/1049c940
+
+---
 ## v1.47.1 (26-Nov-24)
 * Fixed `TriggerEventCommand` not being serialized properly for `TriggerEvent()` method (since v1.47.0). ([@2675613b](https://github.com/mpaperno/TouchPortal-CS-API/commit/2675613b))
 * Changed `TriggerEventStates` dictionary type to `<string, string>` because `triggerEvent.states` values must be of string type. ([@dab4d6e0](https://github.com/mpaperno/TouchPortal-CS-API/commit/dab4d6e0))
