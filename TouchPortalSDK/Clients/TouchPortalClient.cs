@@ -240,7 +240,7 @@ namespace TouchPortalSDK.Clients
         }
 
         /// <inheritdoc cref="ICommandHandler" />
-        bool ICommandHandler.TriggerEvent(string eventId, TriggerEventStates states)
+        bool ICommandHandler.TriggerEvent(string eventId, System.Collections.Generic.Dictionary<string,string> states)
         {
             try {
                 return ((ICommandHandler)this).SendCommand(new TriggerEventCommand(eventId, states));
@@ -249,6 +249,10 @@ namespace TouchPortalSDK.Clients
                 _logger?.LogWarning(e, "TriggerEvent() validation failed.");
                 return false;
             }
+        }
+        /// <inheritdoc cref="ICommandHandler" />
+        bool ICommandHandler.TriggerEvent(string eventId, System.Collections.Generic.IReadOnlyDictionary<string,string> states) {
+            return ((ICommandHandler)this).TriggerEvent(eventId, new (states));
         }
 
         /// <inheritdoc cref="ICommandHandler" />

@@ -119,7 +119,15 @@ namespace TouchPortalSDK.Interfaces
         /// <param name="eventId">The event id to trigger. This event must be defined in the plugin's entry.tp declaration.</param>
         /// <param name="states">This gets serialized to a JSON Object that holds key value pairs of data that are used within Touch Portal as Local States.</param>
         /// <returns>true on successful sending of the message, false otherwise.</returns>
-        bool TriggerEvent(string eventId, Messages.Commands.TriggerEventStates states = null);
+        bool TriggerEvent(string eventId, System.Collections.Generic.Dictionary<string,string> states = null);
+        /// <summary>
+        /// Trigger predefined Events by sending a message to Touch Portal with the given eventId and additional data. This is an overloaded function.
+        /// Since TP API v7.
+        /// </summary>
+        /// <param name="eventId">The event id to trigger. This event must be defined in the plugin's entry.tp declaration.</param>
+        /// <param name="states">This gets serialized to a JSON Object that holds key value pairs of data that are used within Touch Portal as Local States.</param>
+        /// <returns>true on successful sending of the message, false otherwise.</returns>
+        bool TriggerEvent(string eventId, System.Collections.Generic.IReadOnlyDictionary<string,string> states);
 
         /// <summary>
         /// You can also update state lists in Touch Portal. These state lists needs to be defined in the entry file.
